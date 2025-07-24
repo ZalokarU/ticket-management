@@ -24,11 +24,14 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        // Perform the authentication
         $request->authenticate();
 
+        // Regenerate session to prevent fixation
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        // Redirect to Filament's admin dashboard
+        return redirect()->intended('/');
     }
 
     /**
